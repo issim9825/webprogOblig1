@@ -8,36 +8,40 @@
 <body>
 <h1>Bestilling av kinobilletter</h1>
 <label for="film">Velg film:</label>
-<select id="film">
+<select id="film" name="billett">
     <option>Velg film her</option>
     <option>Lord of the Rings: Two Towers</option>
     <option></option>
 </select>
 <br/><br/>
-<label for="antall">Antall</label>
-<input type="text" id="antall" style="width: 1.2rem">
-<div id="antallsjekk" style="color: red"></div>
+<table>
+    <tr>
+        <td><label for="antall">Antall</label>
+            <input type="text" id="antall" style="width: 1.2rem" name="billett"></td>
+        <td><div id="antallsjekk" style="color: red"></div></td>
+    </tr>
+</table>
 <br/><br/>
 <table>
     <tr>
         <td><label for="fnavn">Fornavn</label></td>
         <td><div id="fnavnsjekk" style="color: red"></div></td>
-        <td><input type="text" id="fnavn"></td>
+        <td><input type="text" id="fnavn" name="billett"></td>
     </tr>
     <tr>
         <td><label for="enavn">Etternavn</label></td>
         <td><div id="enavnsjekk" style="color: red"></div></td>
-        <td><input type="text" id="enavn"></td>
+        <td><input type="text" id="enavn" name="billett"></td>
     </tr>
     <tr>
         <td><label for="tlfnr">Telefonnr</label></td>
         <td><div id="tlfnrsjekk" style="color: red"></div></td>
-        <td><input type="number" id="tlfnr"></td>
+        <td><input type="text" id="tlfnr" name="billett"></td>
     </tr>
     <tr>
         <td><label for="epost">Epost</label></td>
         <td><div id="epostsjekk" style="color: red"></div></td>
-        <td><input type="email" id="epost"></td>
+        <td><input type="email" id="epost" name="billett"></td>
     </tr>
     <tr>
         <td><button onclick="visBilletter()">Kjøp billett</button></td>
@@ -47,6 +51,6 @@
 
 <h2>Alle billetter</h2>
 <div id="utskrift"></div>
-<button>Slett alle billettene</button>
+<button onclick="slett()">Slett alle billettene</button>
 </body>
 </html>
