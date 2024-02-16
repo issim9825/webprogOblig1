@@ -1,4 +1,4 @@
-const billetter = [];
+let billetter = [];
 function visBilletter() {
     let film = document.getElementById("film").value;
     let antall = parseInt(document.getElementById("antall").value)
@@ -77,9 +77,8 @@ function emptyInput() {
 }
 
 function slett() {
-    for (let b of billetter) {
-        b.values = "";
-    }
+    billetter = [];
+    document.getElementById("utskrift").innerHTML = "";
 }
 
 function validateTlfnr(tlfnr) {
