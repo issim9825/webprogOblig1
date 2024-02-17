@@ -1,57 +1,79 @@
 let billetter = [];
+
 function visBilletter() {
     let film = document.getElementById("film").value;
     let antall = parseInt(document.getElementById("antall").value)
+    const fnavn = document.getElementById("fnavn").value;
+    const enavn = document.getElementById("enavn").value;
     let tlfnr = document.getElementById("tlfnr").value;
-    let epost = document.getElementById("epost").value
+    let epost = document.getElementById("epost").value;
+
+    let error = NaN;
 
     // Sjekker om en film er valgt
     if (film.match(/^Velg film her$/)) {
-        film = "";
+        error = 1;
     }
 
     // Skjekker om et tall er skrevet inn
     if (isNaN(antall)) {
-        document.getElementById("antallsjekk").innerText = "Må skrive noe i antall!";
+        document.getElementById("antallsjekk").innerText = "Må skrive noe i antall";
         antall = "";
+        error = 1;
     } else {
         document.getElementById("antallsjekk").innerText = "";
     }
+
+    // Skjekker om navn er skrevet inn riktig
+    const navnRegex = /^(\s+|)$/;
+    if (navnRegex.test(fnavn)) {
+        document.getElementById("fnavnsjekk").innerText = "Må skrive noe inn i fornavnet";
+        error = 1;
+    } else {
+        document.getElementById("fnavnsjekk").innerText = "";
+    }
+
+    if (navnRegex.test(enavn)) {
+        document.getElementById("enavnsjekk").innerText = "Må skrive noe inn i fornavnet";
+        error = 1;
+    } else {
+        document.getElementById("enavnsjekk").innerText = "";
+    }
+
 
     // Skjekker om et gyldig telefonnummer er skrevet inn
     if (validateTlfnr(tlfnr)) {
         document.getElementById("tlfnrsjekk").innerText = "";
     } else {
-        tlfnr = "";
+        document.getElementById("tlfnr").value = "";
         document.getElementById("tlfnrsjekk").innerText = "Må skrive noe i telefonnr";
+        error = 1;
     }
 
     // Skjekker om epost er gyldig
     if (validateEpost(epost)) {
         document.getElementById("epostsjekk").innerText = "";
     } else {
-        epost = "";
-        document.getElementById("epostsjekk").innerText = "Må skrive noe i telefonnr";
+        document.getElementById("epost").value = "";
+        document.getElementById("epostsjekk").innerText = "Må skrive noe i epost";
+        error = 1;
     }
 
     // Oppretter billetten som objekt
     let billett = {
         film: film,
         antall: antall,
-        fnavn: document.getElementById("fnavn").value,
-        enavn: document.getElementById("enavn").value,
+        fnavn: fnavn,
+        enavn: enavn,
         tlfnr: tlfnr,
         epost: epost
     };
 
-    /*
-    if (validateTicket(billett)) {
+    // Legger inn billett hvis input er skrevet inn riktig
+    if (isNaN(error)) {
         billetter.push(billett);
-        console.log("Good!")
+        emptyInput()
     }
-     */
-    billetter.push(billett);
-
 
     let ut = "<tr>" + "<th>Film</th>" + "<th>Antall</th>" +
         "<th>Fornavn</th>" + "<th>Etternavn</th>" + "<th>Telefonnr</th>" +
@@ -59,12 +81,13 @@ function visBilletter() {
 
     // Skriver ut billetten i tabell
     for (let b of billetter) {
-        ut += "<tr><td>" + b.film + "</td><td>" + b.antall + "</td><td>" + b.fnavn + "</td>" +
-            "<td>" + b.enavn + "</td><td>" + b.tlfnr + "</td><td>" + b.epost + "</td></tr>";
+        ut += "<tr><td>" + b.film + "</td><td style='text-align: end'>" + b.antall +
+            "</td><td style='text-align: end'>" + b.fnavn + "</td><td style='text-align: end'>" + b.enavn +
+            "</td><td style='text-align: end'>" + b.tlfnr + "</td><td style='text-align: center'>" + b.epost +
+            "</td></tr>";
     }
 
     document.getElementById("utskrift").innerHTML = ut;
-    emptyInput();
 }
 
 function emptyInput() {
@@ -91,13 +114,4 @@ function validateEpost(epost) {
     // validerer om en epost er riktig
     const epostRegex = /^[^\s@]+@+[^\s@]+\.+[^\s@]+$/;
     return epostRegex.test(epost);
-}
-
-function validateTicket(ticket) {
-    for (let value of ticket) {
-        if (!value) {
-            return false;
-        }
-    }
-    return true;
 }
