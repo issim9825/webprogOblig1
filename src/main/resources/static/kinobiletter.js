@@ -16,9 +16,9 @@ function visBilletter() {
     }
 
     // Skjekker om et tall er skrevet inn
-    if (isNaN(antall)) {
+    if (isNaN(antall) || antall <= 0) {
         document.getElementById("antallsjekk").innerText = "Må skrive noe i antall";
-        antall = "";
+        document.getElementById("antall").value = "";
         error = 1;
     } else {
         document.getElementById("antallsjekk").innerText = "";
